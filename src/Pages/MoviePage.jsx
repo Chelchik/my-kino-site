@@ -32,6 +32,8 @@ function MoviePage() {
   const searchFilms = useSelector(selectFilms);
   const theme = useSelector(selectTheme);
 
+  const [noResults, setNoResults] = useState(false);
+
 
   useEffect(() => {
     const popularFetch = async () => {
@@ -71,10 +73,20 @@ function MoviePage() {
     e.preventDefault();
     const response = await request(searchUrl + "&query=" + text);
 
+    if (response.results.length === 0) {
+      setNoResults(true);
+    } else {
+      setNoResults(false)
+    };
+
     dispatch({
       type: "submit",
       payload: response
-    })
+    });
+    dispatch({
+      type: "CLEAR_INPUT",
+      payload: ""
+    });
   }
 
   return (
@@ -179,11 +191,16 @@ function MoviePage() {
           }}
         >
           {
-            searchFilms.length == 0 ? popular.map((film) => {
-              return <SwiperSlide className="mySwiper w-full h-full" key={film.id}><MiniFilmItem film={film} /></SwiperSlide>
-            }) : searchFilms.map((film) => {
-              return <SwiperSlide className="mySwiper w-full h-full" key={film.id}><MiniFilmItem film={film} /></SwiperSlide>
-            })
+              noResults ?
+                <div className='w-full p-14 flex justify-center items-center'>
+                  <h4 className={theme ? 'text-white text-3xl' : 'text-slate-600 text-3xl'}>Not Found</h4>
+                </div>
+                : searchFilms.length == 0 ? popular.map((film) => {
+                  return <SwiperSlide className="mySwiper w-full h-full" key={film.id}><MiniFilmItem film={film} /></SwiperSlide>
+                })
+                  : searchFilms.map((film) => {
+                    return <SwiperSlide className="mySwiper w-full h-full" key={film.id}><MiniFilmItem film={film} /></SwiperSlide>
+                  })
           }
         </Swiper>
       </div>

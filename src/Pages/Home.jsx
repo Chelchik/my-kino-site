@@ -42,7 +42,7 @@ function Home() {
 
       const historyUrl = `${main_url}/discover/movie?sort_by=popularity.desc&with_genres=36&${api_key}`;
       const history = await request(historyUrl);
-      setHistory(history.results)
+      setHistory(history.results);
     }
 
     genreFetch()
@@ -70,17 +70,17 @@ function Home() {
       if (response.results.length === 0) {
         setNoResults(true);
       } else {
-        setNoResults(false)
+        setNoResults(false);
       };
 
       dispatch({
         type: "submit",
         payload: response
-      })
+      });
       dispatch({
         type: "CLEAR_INPUT",
         payload: ""
-      })
+      });
     }
   }
 

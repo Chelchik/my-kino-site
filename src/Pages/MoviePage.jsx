@@ -144,7 +144,7 @@ function MoviePage() {
               return (
                 <SwiperSlide key={actor.id}>
                   <div className='w-full p-7 flex flex-col items-center gap-2 cardsMediaPhone:w-64'>
-                    <img src={img_url + actor.profile_path} alt="" className='w-full h-96 object-contain rounded-xl' />
+                    {actor.profile_path ? <img src={img_url + actor.profile_path} alt="" className='w-full h-96 object-cover rounded-xl' /> : <div className="w-full h-96 text-gray-500 text-3xl bg-gray-300 flex items-center justify-center  rounded-xl">Profile</div> }
 
                     <h4 className={theme ? 'text-white text-center text-xl transition-all hover:text-componyColor' : 'text-slate-600 text-center text-xl transition-all hover:text-componyColor'}>{actor.character}</h4>
 
